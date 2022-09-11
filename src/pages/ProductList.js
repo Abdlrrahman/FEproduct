@@ -9,7 +9,7 @@ export default function ProductList() {
   });
 
   useEffect(function () {
-    fetch("http://127.0.0.1:8000/products")
+    fetch("https://asscandiwebtest.herokuapp.comproducts")
       .then((response) => response.json())
       .then((data) => setAllProducts(data))
       .catch((err) => console.log("err",err));
@@ -39,7 +39,7 @@ export default function ProductList() {
       };
 
       fetch(
-        "http://127.0.0.1:8000/products",
+        "https://asscandiwebtest.herokuapp.comproducts",
         requestOptions
       )
         .then((response) => response.text())

@@ -101,7 +101,7 @@ export default function ProductAdd() {
     };
 
     fetch(
-      "http://127.0.0.1:8000/products",
+      "https://asscandiwebtest.herokuapp.comproducts",
       requestOptions
     )
       .then((response) => response.text())
