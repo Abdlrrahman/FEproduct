@@ -9,7 +9,7 @@ export default function ProductList() {
   });
 
   useEffect(function () {
-    fetch("https://asscandiwebtest.herokuapp.comproducts")
+    fetch("https://asscandiwebtest.herokuapp.com/products")
       .then((response) => response.json())
       .then((data) => setAllProducts(data))
       .catch((err) => console.log("err",err));
@@ -39,7 +39,7 @@ export default function ProductList() {
       };
 
       fetch(
-        "https://asscandiwebtest.herokuapp.comproducts",
+        "https://asscandiwebtest.herokuapp.com/products",
         requestOptions
       )
         .then((response) => response.text())

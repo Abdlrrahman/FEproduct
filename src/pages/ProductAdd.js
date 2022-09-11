@@ -101,7 +101,7 @@ export default function ProductAdd() {
     };
 
     fetch(
-      "https://asscandiwebtest.herokuapp.comproducts",
+      "https://asscandiwebtest.herokuapp.com/products",
       requestOptions
     )
       .then((response) => response.text())
