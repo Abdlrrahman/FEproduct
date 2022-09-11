@@ -9,9 +9,10 @@ export default function ProductList() {
   });
 
   useEffect(function () {
-    fetch("https://scandiweb.ipublishinghouse.com/app/api/v1/getProduct.php")
+    fetch("http://127.0.0.1:8000/products")
       .then((response) => response.json())
-      .then((data) => setAllProducts(data));
+      .then((data) => setAllProducts(data))
+      .catch((err) => console.log("err",err));
   }, []);
 
   function handleDeleteClick() {
@@ -19,27 +20,26 @@ export default function ProductList() {
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
-      let urlencoded = new URLSearchParams();
+      // let urlencoded = new URLSearchParams();
+      let urlencoded = {ids: []}
       for (
         let index = 0;
         index < selectedProducts.product_ids.length;
         index++
       ) {
-        urlencoded.append(
-          `product_ids[${index}]`,
-          selectedProducts.product_ids[index]
-        );
+        urlencoded.ids.push(selectedProducts.product_ids[index])
       }
 
       const requestOptions = {
-        method: "POST",
+        method: "DELETE",
         headers: myHeaders,
-        body: urlencoded,
+        body: JSON.stringify(urlencoded),
         redirect: "follow",
+        'Access-Control-Allow-Origin':'*',
       };
 
       fetch(
-        "https://scandiweb.ipublishinghouse.com/app/api/v1/deleteProduct.php",
+        "http://127.0.0.1:8000/products",
         requestOptions
       )
         .then((response) => response.text())
@@ -66,13 +66,14 @@ export default function ProductList() {
   }
 
   function handleCheckboxChange(event) {
-    const { name, value, type, checked } = event.target;
+    console.log(' event.target.id',  event.target.id)
+    const { id, name, value, type, checked } = event.target;
 
     let selectedProduct_ids = selectedProducts.product_ids;
-    selectedProduct_ids.push(value);
+    selectedProduct_ids.push(parseInt(id));
     const newSelectedProducts = {
       ...selectedProducts,
-      [name]: selectedProduct_ids,
+      [id]: selectedProduct_ids,
     };
     setSelectedProducts(newSelectedProducts);
   }
@@ -99,7 +100,7 @@ export default function ProductList() {
         {product.price}
         <br />
 
-        {product.product_attribute_value}
+        {product.size}
       </div>
     );
   });

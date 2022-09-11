@@ -80,26 +80,28 @@ export default function ProductAdd() {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 
-    const urlencoded = new URLSearchParams();
-    urlencoded.append("sku", formData.sku);
-    urlencoded.append("name", formData.name);
-    urlencoded.append("price", formData.price);
-    urlencoded.append("productType", formData.productType);
-    urlencoded.append("height", formData.height);
-    urlencoded.append("width", formData.width);
-    urlencoded.append("length", formData.length);
-    urlencoded.append("size", formData.size);
-    urlencoded.append("weight", formData.weight);
+    const urlencoded = {};
+    urlencoded.size = (formData.height, formData.width, formData.length)
+    
+    formData.productType == 'DVD' ? urlencoded.size = `${formData.size} MB` : 
+    ( formData.productType == 'Furniture' ?  urlencoded.size = `H: ${formData.height} CM, W: ${formData.width} CM, L: ${formData.length} CM` :
+    formData.productType == 'Book' ?  urlencoded.size = `${formData.weight} KG` : urlencoded.size = '' )
+    urlencoded.sku = formData.sku;
+    urlencoded.name = formData.name;
+    urlencoded.price = formData.price;
+    urlencoded.category = formData.productType;
+
 
     const requestOptions = {
       method: "POST",
       headers: myHeaders,
-      body: urlencoded,
+      body: JSON.stringify(urlencoded),
       redirect: "follow",
+      'Access-Control-Allow-Origin':'*',
     };
 
     fetch(
-      "https://scandiweb.ipublishinghouse.com/app/api/v1/saveProduct.php",
+      "http://127.0.0.1:8000/products",
       requestOptions
     )
       .then((response) => response.text())

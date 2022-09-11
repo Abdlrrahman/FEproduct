@@ -4,6 +4,7 @@ import "./css/App.css";
 import Footer from "./components/Footer";
 import ProductAdd from "./pages/ProductAdd";
 import ProductList from "./pages/ProductList";
+require('dotenv').config()
 
 function App() {
   return (
